@@ -1,0 +1,44 @@
+{
+    // Applications part
+    "apps": [
+      {
+        "name": "tracker_emails",// this is the name of the process you will see when running pm2 list
+        "script": "./lib/server.js",
+        // Environment variables injected when starting with --env production
+        // http://pm2.keymetrics.io/docs/usage/application-declaration/#switching-to-different-environments
+        "env": {
+           "NODE_ENV": "development"
+        }
+      }
+    ],
+    // Deployment part
+    // Here you describe each environment
+    "deploy": {
+      "ubuntuAWS": { // development, staging,production
+        "key": "C:/Users/danie/Downloads/newKey.pem",
+        "user": "ubuntu",// default on AWS, may change
+        // Multi host is possible, just by passing IPs/hostname as an array
+ 
+         "host": [ "ec2-35-178-18-51.eu-west-2.compute.amazonaws.com"],
+        // Branch
+        "ref": "origin/master",
+        // Git repository to clone
+        "repo": "git@github.com:daniellevy133/tracker_emails.git",
+        // Path of the application on target servers
+        "path": "/home/ubuntu/trackerEmails",
+        // Can be used to give options in the format used in the configura-
+        // tion file.  This is useful for specifying options for which there
+        // is no separate command-line flag, see 'man ssh'
+        // can be either a single string or an array of strings
+        "ssh_options": "StrictHostKeyChecking=no",
+        //"pre-deploy": "git reset --hard",
+        // Commands to be executed on the server after the repo has been cloned
+        "post-deploy": "npm install && npm run build && pm2 startOrRestart ecosystem.json && pm2 save",
+        // Environment variables that must be injected in all applications on this env
+        "env": {
+         "NODE_ENV": "development"
+       }
+      }
+    }
+  }
+ 

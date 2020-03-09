@@ -1,0 +1,28 @@
+{
+    "MongoDB" : {
+        "Configurations" : {
+            "host" : "localhost",
+            "user" : "",
+            "password" : "",
+            "port" : "27017",
+            "database" : "emailTracker"
+        },
+        "currentVersion" : 1
+    },
+    // "Security": {
+    //     "Request": {
+    //         "Header": {
+    //             "key": "eco99fm-App-Auth",
+    //             "value": "tGj6U4j8JTQBM9zPEMr9LJR3UHsz2ZtB643zzQ2nqXdtJjB9"
+    //         },
+    //         "ForToken": {
+    //             "key": "JWT-Token",
+    //             "value": "0ddf5597e02d981f8803c4cc11f015a4e52679d706edb29b595d9e466def5bcf95273a3053ab5d97ee893c23e4023b912daefaade316406a33b7685d4d223dfa"
+    //         }
+    //     },
+    //     "ForgotPassword": {
+    //         "hoursExpiry": 24
+    //     }
+    // }
+}
+
