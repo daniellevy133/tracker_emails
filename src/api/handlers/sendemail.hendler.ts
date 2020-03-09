@@ -54,7 +54,9 @@ class SendEmailHandler {
 			},
 			tls:{
 				rejectUnauthorized:false
-			}
+			},
+			secure: true,
+			port:465 
 			});
 			console.log('create smtpTransposrt');
 			const handlebarOptions = {
