@@ -29,7 +29,6 @@ class TrackerController {
             }
             await SendEmailsModel.findOneAndUpdate({_id:update._id},{ $set: update });
             return response.status(200).redirect('http://www.moveo.co.il');
-          //return response.status(200).send(await this.loadPage("http://www.moveo.co.il"));
         }catch(err){
           next(err);
         }
@@ -80,28 +79,6 @@ class TrackerController {
             next(err);
         }
       }
-  
-      private async loadPage(url:string) {
-        try{
-          const browser = await  Puppeteer.launch({
-            ignoreDefaultArgs: ['--disable-extensions'],
-            headless: false,
-            ignoreHTTPSErrors: true
-          });
-          console.log('launch');
-          const page = await browser.newPage();
-          console.log('page');
-          await page.goto(url);
-          console.log('goto');
-          const html = await page.content();
-          console.log('html');
-          await browser.close();
-          return html;
-        }catch(err){
-          throw err;
-        }
-        }
-  
 }
 
 export default TrackerController;
