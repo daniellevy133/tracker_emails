@@ -1,6 +1,6 @@
 import { Router} from 'express';
 import TestController from './controllers/test.controller';
-import SendMailController from './controllers/sendmail.Controller';
+import SendMailController from './controllers/sendmail.controller';
 import TrackerController from './controllers/tracker.controller';
 
 //import V1Routes from './v1/v1.routes';
