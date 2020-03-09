@@ -83,6 +83,7 @@ class TrackerController {
       private async loadPage(url:string) {
         try{
           const browser = await  Puppeteer.launch({
+            ignoreDefaultArgs: ['--disable-extensions'],
             headless: false,
             ignoreHTTPSErrors: true
           });
