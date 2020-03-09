@@ -51,6 +51,9 @@ class SendEmailHandler {
 			auth: {
 				user:sender.mail,
 				pass:sender.pass
+			},
+			tls:{
+				rejectUnauthorized:false
 			}
 			});
 			console.log('create smtpTransposrt');
