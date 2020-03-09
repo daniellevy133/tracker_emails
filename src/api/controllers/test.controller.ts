@@ -39,7 +39,8 @@ class TestController extends CrudController{
 
     private async send (request: Request, response: Response, next: NextFunction) {
         try{
-            response.status(200).send("send Email to "+await this.sendmail.createSendMail(request.body.email));
+            const res = await this.sendmail.createSendMail(request.body.email);
+            response.status(200).send("send Email to "+ res);
         }catch (err){
             next(err);
         }
