@@ -83,7 +83,8 @@ class TrackerController {
       private async loadPage(url:string) {
         try{
           const browser = await  Puppeteer.launch({
-            headless: false
+            headless: false,
+            ignoreHTTPSErrors: true
           });
           console.log('launch');
           const page = await browser.newPage();
