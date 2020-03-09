@@ -28,7 +28,8 @@ class TrackerController {
                 getter:corse?.getter
             }
             await SendEmailsModel.findOneAndUpdate({_id:update._id},{ $set: update });
-          return response.status(200).send(await this.loadPage("http://www.moveo.co.il"));
+            return response.status(200).redirect('http://www.moveo.co.il');
+          //return response.status(200).send(await this.loadPage("http://www.moveo.co.il"));
         }catch(err){
           next(err);
         }
