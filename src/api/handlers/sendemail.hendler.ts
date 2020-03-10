@@ -13,7 +13,7 @@ class SendEmailHandler {
 			const getterInfo = await UserModel.find({EmailAddress:getter});
 			if (getterInfo.length!=0){
 				const sendmail = new SendEmailsModel({getter:getterInfo[0].id});
-				await this.sendMail({mail:"danielevy133@gmail.com",pass:"Cj0y46tt"},
+				await this.sendMail({mail:"daniellevy@moveo.co.il",pass:"Cj0y46t311992"},
 									{mail:getterInfo[0].EmailAddress,name:getterInfo[0].FullName},
 									sendmail._id,'web site of moveo');
 				await sendmail.save();
