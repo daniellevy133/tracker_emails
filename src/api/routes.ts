@@ -14,7 +14,7 @@ class ApiRoutes {
       const user = new UserController();
       const SendMail = new SendMailController();
       const tracker = new TrackerController()
-      this.router.use('/test/',user.router);
+      this.router.use('/user/',user.router);
       this.router.use('/sendmail/',SendMail.router);
       this.router.use('/',tracker.router);
     }
