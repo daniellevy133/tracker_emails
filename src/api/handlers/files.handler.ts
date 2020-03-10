@@ -40,6 +40,20 @@ class FilesHandler {
         }
     }
 
+    async fileExists(directory:string,fileName:string){
+        try{
+            const files= await fs.readdirSync(directory);
+            for (const file of files){
+                if(file===fileName){
+                    return true;
+                }
+            }
+            return false;
+        }catch(err){
+            throw err;
+        }
+    }
+
     private async removeFilesStream(directory:string)
     {
         try{

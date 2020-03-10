@@ -4,7 +4,7 @@ import {SendEmailsModel} from'../../db/models/sendemails.model';
 import FilesHandler from '../handlers/files.handler';
 
 class TrackerController {
-    
+
     public router = Router(); 
     private files = new FilesHandler();
 
@@ -62,7 +62,9 @@ class TrackerController {
         try{
             const opener = await SendEmailsModel.aggregate(pipeline).exec();
             if (opener.length>0){
-                await this.files.removeFile('','test.csv');
+                if (await this.files.fileExists('./','test.csv')){
+                    await this.files.removeFile('','test.csv');
+                }
                 const keys = Object.keys(opener[0]);
                 const csv = opener.map((user:any)=>{
                     return keys.map((key:any)=>{

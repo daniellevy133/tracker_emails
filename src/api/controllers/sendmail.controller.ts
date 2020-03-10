@@ -2,11 +2,12 @@
 import CrudController from '../../generics/baseCrud.controller';
 import {SendEmailsModel} from'../../db/models/sendemails.model';
 import { Request, Response, NextFunction } from 'express';
-import SendEmailHandler from'../handlers/sendemail.hendler'
+import SendEmailHandler from'../handlers/sendemail.hendler';
+
 
 class SendMailController extends CrudController{
-    
-    private sendmailHandler = new SendEmailHandler()
+
+    private sendmailHandler = new SendEmailHandler();
     
     protected initializeRoutes(): void {
         this.router.get('/',this.getAll.bind(this));
