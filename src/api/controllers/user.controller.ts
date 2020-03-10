@@ -5,10 +5,12 @@ import FilesHandler from '../handlers/files.handler';
 import SendEmailHandler from '../handlers/sendemail.hendler';
 import * as multer from 'multer';
 
-class TestController extends CrudController{
+class UserController extends CrudController{
+    
     private upload =multer({dest:'uploads/'});
     private files = new FilesHandler();
-    private sendmail = new SendEmailHandler()
+    private sendmail = new SendEmailHandler();
+
     protected initializeRoutes(): void {
         this.upload = multer({dest:'uploads/'});
         this.router.post('/',this.upload.single('file'),this.test.bind(this));
@@ -62,4 +64,4 @@ class TestController extends CrudController{
 
 }
 
-export default TestController;
+export default UserController;

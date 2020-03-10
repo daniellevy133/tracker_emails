@@ -16,9 +16,7 @@ class SendEmailHandler {
 				await this.sendMail({mail:"danielevy133@gmail.com",pass:"Cj0y46tt"},
 									{mail:getterInfo[0].EmailAddress,name:getterInfo[0].FullName},
 									sendmail._id,'test');
-				console.log('mail sent');
 				await sendmail.save();
-				console.log('save id mail to datadase')
 				return getterInfo[0].FullName;
 			}else{
 				throw "user dosen't exists"
@@ -45,7 +43,6 @@ class SendEmailHandler {
 	}
 
 	private async sendMail(sender:{mail:string,pass:string}, getter:{mail:string,name:string},id:string,subject?:string){
-		console.log('start send Mail');
 		var smtpTransposrt = nodemailer.createTransport({
 			service: 'Gmail',
 			auth: {
@@ -58,7 +55,6 @@ class SendEmailHandler {
 			secure: true,
 			port:465 
 			});
-			console.log('create smtpTransposrt');
 			const handlebarOptions = {
 				viewEngine: {
 				  extName: '.hbs',
@@ -69,7 +65,6 @@ class SendEmailHandler {
 				viewPath: './AppPages',
 				extName: '.hbs',
 			  };
-			  console.log('create handlebarOptions');
 			smtpTransposrt.use('compile',this.hbs(
 				handlebarOptions
 			));
@@ -84,7 +79,6 @@ class SendEmailHandler {
 					mailID: id,
 				  }
 				}; 
-				console.log('create mailOptions and send mail')
 				return await smtpTransposrt.sendMail(mailOptions);
 			}catch(err){
 				throw err;

@@ -5,10 +5,12 @@ import { Request, Response, NextFunction } from 'express';
 import SendEmailHandler from'../handlers/sendemail.hendler'
 
 class SendMailController extends CrudController{
+    
     private sendmailHandler = new SendEmailHandler()
     
     protected initializeRoutes(): void {
         this.router.get('/',this.getAll.bind(this));
+        this.router.post('/',this.send.bind(this));
         this.router.get('/checkemailstatus',this.check.bind(this));
     }
     
@@ -20,6 +22,14 @@ class SendMailController extends CrudController{
         try{
             response.status(200).send(await this.sendmailHandler.checkStatusMail(request.query._id));
         }catch(err){
+            next(err);
+        }
+    }
+
+    private async send (request: Request, response: Response, next: NextFunction) {
+        try{
+            response.status(200).send("send Email to "+ await this.sendmailHandler.createSendMail(request.body.email));
+        }catch (err){
             next(err);
         }
     }

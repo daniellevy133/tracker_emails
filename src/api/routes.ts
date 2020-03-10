@@ -1,11 +1,7 @@
 import { Router} from 'express';
-import TestController from './controllers/test.controller';
+import UserController from './controllers/user.controller';
 import SendMailController from './controllers/sendmail.controller';
 import TrackerController from './controllers/tracker.controller';
-
-//import V1Routes from './v1/v1.routes';
-
-
 
 class ApiRoutes {
     public router = Router();
@@ -15,15 +11,14 @@ class ApiRoutes {
     }
 
     private initializeRoutes() {
-      const test = new TestController();
+      const user = new UserController();
       const SendMail = new SendMailController();
       const tracker = new TrackerController()
-      this.router.use('/test/',test.router);
+      this.router.use('/test/',user.router);
       this.router.use('/sendmail/',SendMail.router);
       this.router.use('/',tracker.router);
     }
 
-    
 }
 
 export default ApiRoutes;

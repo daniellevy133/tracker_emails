@@ -2,12 +2,11 @@ import * as Puppeteer from 'puppeteer';
 import { Request, Response, NextFunction, Router } from 'express';
 import {SendEmailsModel} from'../../db/models/sendemails.model';
 import FilesHandler from '../handlers/files.handler';
-import * as path from 'path';
 
 class TrackerController {
+    
     public router = Router(); 
     private files = new FilesHandler();
-    private basePath = '/';
 
     constructor(){
         this.initializeRoutes();
