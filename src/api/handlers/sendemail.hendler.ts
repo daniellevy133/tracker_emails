@@ -15,7 +15,7 @@ class SendEmailHandler {
 				const sendmail = new SendEmailsModel({getter:getterInfo[0].id});
 				await this.sendMail({mail:"daniellevy@moveo.co.il",pass:"Cj0y46t311992"},
 									{mail:getterInfo[0].EmailAddress,name:getterInfo[0].FullName},
-									sendmail._id,'web site of moveo');
+									sendmail._id,'web site of moveo','emailPage.problem');
 				await sendmail.save();
 				return getterInfo[0].FullName;
 			}else{
@@ -42,7 +42,7 @@ class SendEmailHandler {
 		}
 	}
 
-	private async sendMail(sender:{mail:string,pass:string}, getter:{mail:string,name:string},id:string,subject?:string){
+	private async sendMail(sender:{mail:string,pass:string}, getter:{mail:string,name:string},id:string,subject?:string,htmlFile?:string){
 		var smtpTransposrt = nodemailer.createTransport({
 			service: 'Gmail',
 			auth: {
@@ -60,7 +60,7 @@ class SendEmailHandler {
 				  extName: '.hbs',
 				  partialsDir: './AppPages',
 				  layoutsDir: './AppPages',
-				  defaultLayout: 'emailPage',
+				  defaultLayout: 'emailPage.neweb',
 				}, 
 				viewPath: './AppPages',
 				extName: '.hbs',
@@ -73,7 +73,7 @@ class SendEmailHandler {
 				  from : sender.mail, 
 				  to : getter.mail,
 				  subject:subject,
-				  template:'emailPage',
+				  template:htmlFile,
 				  context: {
 					FullName:getter.name,
 					mailID: id,
