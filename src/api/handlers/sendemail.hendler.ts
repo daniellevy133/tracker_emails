@@ -15,7 +15,7 @@ class SendEmailHandler {
 				const sendmail = new SendEmailsModel({getter:getterInfo[0].id});
 				await this.sendMail({mail:"daniellevy@moveo.co.il",pass:"Cj0y46t311992"},
 									{mail:getterInfo[0].EmailAddress,name:getterInfo[0].FullName},
-									sendmail._id,'web site of moveo','emailPage.problem');
+									sendmail._id,'programming problem','emailPageProblem');
 				await sendmail.save();
 				return getterInfo[0].FullName;
 			}else{
@@ -60,7 +60,7 @@ class SendEmailHandler {
 				  extName: '.hbs',
 				  partialsDir: './AppPages',
 				  layoutsDir: './AppPages',
-				  defaultLayout: 'emailPage.neweb',
+				  defaultLayout: htmlFile,
 				}, 
 				viewPath: './AppPages',
 				extName: '.hbs',
