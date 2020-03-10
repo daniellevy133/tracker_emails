@@ -2,20 +2,17 @@ import CrudController from '../../generics/baseCrud.controller';
 import { Request, Response, NextFunction } from 'express';
 import {UserModel} from'../../db/models/user.model';
 import FilesHandler from '../handlers/files.handler';
-import SendEmailHandler from '../handlers/sendemail.hendler';
 import * as multer from 'multer';
 
 class UserController extends CrudController{
-    
+
     private upload =multer({dest:'uploads/'});
     private files = new FilesHandler();
-    private sendmail = new SendEmailHandler();
 
     protected initializeRoutes(): void {
         this.upload = multer({dest:'uploads/'});
         this.router.post('/',this.upload.single('file'),this.test.bind(this));
         this.router.get('/', this.getAll.bind(this));
-        this.router.post('/sendMail',this.send.bind(this));
     }    
     protected getSchema(): import("mongoose").Model<any, {}> {
         return UserModel;
@@ -35,15 +32,6 @@ class UserController extends CrudController{
             }
             return response.status(200).send(await this.createMany(users));
         } catch (err){
-            next(err);
-        }
-    }
-
-    private async send (request: Request, response: Response, next: NextFunction) {
-        try{
-            const res = await this.sendmail.createSendMail(request.body.email);
-            response.status(200).send("send Email to "+ res);
-        }catch (err){
             next(err);
         }
     }
