@@ -2,6 +2,7 @@ import {SendEmailsModel} from '../../db/models/sendemails.model'
 import {UserModel} from '../../db/models/user.model'
 import { Types } from 'mongoose';
 import * as nodemailer from 'nodemailer';
+import * as config from 'config';
 
 
 class SendEmailHandler {
@@ -13,9 +14,7 @@ class SendEmailHandler {
 			const getterInfo = await UserModel.find({EmailAddress:getter});
 			if (getterInfo.length!=0){
 				const sendmail = new SendEmailsModel({getter:getterInfo[0].id});
-				await this.sendMail({mail:"daniellevy@moveo.co.il",pass:"Cj0y46t311992"},
-									{mail:getterInfo[0].EmailAddress,name:getterInfo[0].FullName},
-									sendmail._id,'programming problem','emailPageName');
+				await this.sendMail({mail:getterInfo[0].EmailAddress,name:getterInfo[0].FullName},sendmail._id);
 				await sendmail.save();
 				return getterInfo[0].FullName;
 			}else{
@@ -42,12 +41,14 @@ class SendEmailHandler {
 		}
 	}
 
-	private async sendMail(sender:{mail:string,pass:string}, getter:{mail:string,name:string},id:string,subject?:string,htmlFile?:string){
+	private async sendMail(getter:{mail:string,name:string},id:string){
+		const mailSender = config.get('SendMail.EmailSender') as {[key: string]: string};
+		const mailBody = config.get('SendMail.Body') as {[key: string]: string};
 		var smtpTransposrt = nodemailer.createTransport({
-			service: 'Gmail',
+			service: mailSender.service,
 			auth: {
-				user:sender.mail,
-				pass:sender.pass
+				user:mailSender.user,
+				pass:mailSender.pass
 			},
 			tls:{
 				rejectUnauthorized:false
@@ -58,11 +59,11 @@ class SendEmailHandler {
 			const handlebarOptions = {
 				viewEngine: {
 				  extName: '.hbs',
-				  partialsDir: './AppPages',
-				  layoutsDir: './AppPages',
-				  defaultLayout: htmlFile,
+				  partialsDir: mailBody.pathOfPage,
+				  layoutsDir: mailBody.pathOfPage,
+				  defaultLayout: mailBody.page,
 				}, 
-				viewPath: './AppPages',
+				viewPath: mailBody.pathOfPage,
 				extName: '.hbs',
 			  };
 			smtpTransposrt.use('compile',this.hbs(
@@ -70,10 +71,10 @@ class SendEmailHandler {
 			));
 			try{
 				const mailOptions = { 
-				  from : sender.mail, 
+				  from : mailSender.user, 
 				  to : getter.mail,
-				  subject:subject,
-				  template:htmlFile,
+				  subject:mailBody.subject,
+				  template:mailBody.page,
 				  context: {
 					FullName:getter.name,
 					mailID: id,

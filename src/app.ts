@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
 // import * as fs from 'fs';
 // import * as path from 'path';
 // import * as logger from 'morgan';
@@ -23,6 +24,7 @@ class App {
     }
 
     private initAppUsage(){
+        dotenv.config();
         this.initializeMiddlewares();
         this.initializeRoutes();
         // this.initializeErrorHandling();

@@ -13,7 +13,7 @@ class FilesHandler {
             for await (const chunk of readStream){
                 arrayChun.push(chunk);
             }
-            await this.removeFilesStream('uploads');
+            await this.removeFilesStream(process.env.PATH_OF_SEND_FILE);
         } catch(err){
             throw err;
         }
@@ -24,7 +24,7 @@ class FilesHandler {
         return suffixes.some(suffix=>{ return string.endsWith(suffix); })
     }
 
-    async saveToFile(fileName:string,data:any){
+    async saveToFile(fileName:any,data:any){
         try{
             await fs.writeFileSync(fileName,data)
         }catch(err){
@@ -32,7 +32,7 @@ class FilesHandler {
         }
     }
 
-    async removeFile(directory:string,file:string){
+    async removeFile(directory:string,file:any){
         try{
             await fs.unlinkSync(path.join(directory,file));
         }catch(err){
@@ -40,21 +40,16 @@ class FilesHandler {
         }
     }
 
-    async fileExists(directory:string,fileName:string){
+    async fileExists(directory:string,fileName?:string){
         try{
             const files= await fs.readdirSync(directory);
-            for (const file of files){
-                if(file===fileName){
-                    return true;
-                }
-            }
-            return false;
+            return files.some(file=> file === fileName);
         }catch(err){
             throw err;
         }
     }
 
-    private async removeFilesStream(directory:string)
+    private async removeFilesStream(directory:any)
     {
         try{
             const files= await fs.readdirSync(directory);

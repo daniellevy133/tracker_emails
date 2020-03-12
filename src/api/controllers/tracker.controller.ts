@@ -62,8 +62,8 @@ class TrackerController {
         try{
             const opener = await SendEmailsModel.aggregate(pipeline).exec();
             if (opener.length>0){
-                if (await this.files.fileExists('./','test.csv')){
-                    await this.files.removeFile('','test.csv');
+                if (await this.files.fileExists('./',process.env.EXPORT_FILE_NAME)){
+                    await this.files.removeFile('',process.env.EXPORT_FILE_NAME);
                 }
                 const keys = Object.keys(opener[0]);
                 const csv = opener.map((user:any)=>{
@@ -73,8 +73,8 @@ class TrackerController {
                 });
                 csv.unshift(keys.join(','));
                 const csvFile = csv.join('\n');
-                await this.files.saveToFile('test.csv',csvFile);
-                return response.status(200).download('./test.csv');
+                await this.files.saveToFile(process.env.EXPORT_FILE_NAME,csvFile);
+                return response.status(200).download('./'+process.env.EXPORT_FILE_NAME);
             }
         }catch(err){
             next(err);

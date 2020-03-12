@@ -9,6 +9,19 @@
         },
         "currentVersion" : 1
     },
+    "SendMail":{
+        "EmailSender":{
+            "user":"daniellevy@moveo.co.il",
+            "pass":"Cj0y46t311992",
+            "service":"Gmail"
+        },
+        "Body":{
+            "subject":"",
+            "page":"emailPageName",
+            "pathOfPage":"./AppPages"
+        }
+
+    },
     // "Security": {
     //     "Request": {
     //         "Header": {

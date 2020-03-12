@@ -6,11 +6,11 @@ import * as multer from 'multer';
 
 class UserController extends CrudController{
 
-    private upload =multer({dest:'uploads/'});
+    private upload =multer({dest:process.env.PATH_OF_SEND_FILE+'/'});
     private files = new FilesHandler();
 
     protected initializeRoutes(): void {
-        this.upload = multer({dest:'uploads/'});
+        this.upload = multer({dest:process.env.PATH_OF_SEND_FILE+'/'});
         this.router.post('/',this.upload.single('file'),this.test.bind(this));
         this.router.get('/', this.getAll.bind(this));
     }    
